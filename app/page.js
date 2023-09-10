@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [data, setData] = useState();
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
+  const [clickedVideoId, setClickedVideoId] = useState(null);
+
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
@@ -46,22 +48,23 @@ export default function Home() {
       <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 items-center justify-between">
       {data &&
         data.map((d) => {
+           const isVideoPlaying = d.id === clickedVideoId;
           return (
             <div key={d.id} className="flex flex-col p-8 my-2 bg-slate-800">
-              {isPlaying ? (
+              {isVideoPlaying ? (
                 <video
                   controls
                   autoPlay
-                  src={d.videos}
+                  src={d.videos.embeded}
                   width="640"
                   height="360"
-                  onClick={togglePlay}
+                  onClick={() => setClickedVideoId(null)}
                 />
               ) : (
                 <Image
                   src={d.thumbnail}
                   alt="Video Thumbnail"
-                  onClick={togglePlay}
+                  onClick={() => setClickedVideoId(d.id)}
                   style={{ cursor: "pointer" }}
                   width="300"
                   height="300"
