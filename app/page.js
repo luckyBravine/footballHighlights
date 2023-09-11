@@ -1,82 +1,60 @@
 "use client";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+
+import Link from "next/link";
+import { RiExchangeFundsLine } from "react-icons/ri";
+import {SiChatbot} from "react-icons/si"
+import {FaLayerGroup} from "react-icons/fa"
+import {BiSolidBookOpen, BiCameraMovie } from "react-icons/bi"
+import {VscGraph} from "react-icons/vsc"
 
 export default function Home() {
-  const [data, setData] = useState();
-  // const [isPlaying, setIsPlaying] = useState(false);
-  const [clickedVideoId, setClickedVideoId] = useState(null);
-
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = {
-      // year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      // second: 'numeric',
-      // timeZoneName: 'short',
-    };
-    return date.toLocaleString(undefined, options);
-  };
-
-  const url = "https://free-football-soccer-videos.p.rapidapi.com/";
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "6ec2bad9bdmsh0edbdf1dbca64adp16c629jsn4235a5a2d52a",
-        "X-RapidAPI-Host": "free-football-soccer-videos.p.rapidapi.com",
-      },
-    };
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((response) =>
-        // console.log(response)
-        setData(response)
-      )
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
   return (
     <main className="min-h-screen flex flex-col items-center justify-between p-24">
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 items-center justify-between">
-      {data &&
-        data.map((d) => {
-           const isVideoPlaying = d.id === clickedVideoId;
-          return (
-            <div key={d.id} className="flex flex-col p-8 my-2 bg-slate-800">
-              {isVideoPlaying ? (
-                <video
-                  controls
-                  autoPlay
-                  src={d.videos.embeded}
-                  width="640"
-                  height="360"
-                  onClick={() => setClickedVideoId(null)}
-                />
-              ) : (
-                <Image
-                  src={d.thumbnail}
-                  alt="Video Thumbnail"
-                  onClick={() => setClickedVideoId(d.id)}
-                  style={{ cursor: "pointer" }}
-                  width="300"
-                  height="300"
-                />
-              )}
-              <h1 className="text-white">{d.name}</h1>
-              <h2 className="text-white">{d.title}</h2>
-              <span className="text-white">{formatDate(d.date)}</span>
-            </div>
-          );
-        })}
-        </div>
+      <h1>API Collection ✨</h1>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-center justify-between">
+        <Link
+          href="/SureOdds"
+          className="w-[300px] h-[200px] p-4 flex flex-col justify-center items-center mx-auto bg-slate-800 hover:bg-slate-600"
+        >
+          <RiExchangeFundsLine className="text-6xl mb-3" />
+          <h1 className="font-poppins">SureOdds</h1>
+        </Link>
+        <Link
+          href="/FoodRecipe"
+          className="w-[300px] h-[200px] p-4 flex flex-col justify-center items-center mx-auto bg-slate-800 hover:bg-slate-600"
+        >
+          <BiSolidBookOpen className="text-6xl mb-3"  />
+          <h1>FoodRecipe</h1>
+        </Link>
+        <Link
+          href="/Movies"
+          className="w-[300px] h-[200px] p-4 flex flex-col justify-center items-center mx-auto bg-slate-800 hover:bg-slate-600"
+        >
+          <BiCameraMovie className="text-6xl mb-3"  />
+          <h1>Movies</h1>
+        </Link>
+        <Link
+          href="/StockMarkets"
+          className="w-[300px] h-[200px] p-4 flex flex-col justify-center items-center mx-auto bg-slate-800 hover:bg-slate-600"
+        >
+          <VscGraph className="text-6xl mb-3"  />
+          <h1>StockMarkets</h1>
+        </Link>
+        <Link
+          href="/Dictionary"
+          className="w-[300px] h-[200px] p-4 flex flex-col justify-center items-center mx-auto bg-slate-800 hover:bg-slate-600"
+        >
+          <FaLayerGroup className="text-6xl mb-3"  />
+          <h1>Dictionary</h1>
+        </Link>
+        <Link
+          href="/AIChatBot"
+          className="w-[300px] h-[200px] p-4 flex flex-col justify-center items-center mx-auto bg-slate-800 hover:bg-slate-600"
+        >
+          <SiChatbot className="text-6xl mb-3"  />
+          <h1>AIChatBot</h1>
+        </Link>
+      </div>
     </main>
   );
 }
